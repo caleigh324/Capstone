@@ -1,8 +1,10 @@
 body{
   font-family: Helvetica;
   text-align: center;
-  background-color: lime;
+  background-color: lightgray;
+  color:black;
 }
 h1{
-	background-color:yellow;
+	background-color:maroon;
+	color:white;
 }
