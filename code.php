@@ -79,7 +79,7 @@ $selected_school = "";
 if(isset($_POST['submit_school'])){
   $selected_school = mysqli_real_escape_string($conn, $_POST['school']);
   $_SESSION['selected_school'] = $selected_school;
-  echo "You have selected: " .$_SESSION['selected_school'];
+  echo "You have selected: " .$selected_school;
 }
  ?>
 </div>
@@ -131,9 +131,16 @@ if(isset($_POST['submit_courses'])){//to run PHP script on submit
 
 <div class = "output">
 <h3>Course Equivalency</h3>
+<table>
+ <tr>
+   <th>Transfer Course</th>
+   <th>Arcadia Course Equivalent</th>
+   <th>Arcadia Curricular Requirement</th>
+ </tr>
+ <tr>
   <?php
 
-   $sql3 = "SELECT arcadia_course FROM data WHERE school = ? AND transfer_course = ?";
+   $sql3 = "SELECT arcadia_course, curricular_requirement FROM data WHERE school = ? AND transfer_course = ?";
 
    if(mysqli_stmt_prepare($stmt, $sql3)){
      mysqli_stmt_bind_param($stmt, "ss", $_SESSION['selected_school'], $selected_course);
@@ -147,9 +154,12 @@ if(isset($_POST['submit_courses'])){//to run PHP script on submit
 
    while($row3 = mysqli_fetch_assoc($result3)){
      // inserts all data as array
-     echo $row3['arcadia_course'] . " is equivalent to " . $selected_course . " at " . $_SESSION['selected_school'];
+     echo "<td>" . $selected_course . "</td> <td>" . $row3['arcadia_course'] . "</td> <td>" . $row3['curricular_requirement'] . "</td> </tr>";
+     //echo $row3['arcadia_course'] . " is equivalent to " . $selected_course . " at " . $_SESSION['selected_school'];
         }
    ?>
+
+   </table>
 
 </div>
 
