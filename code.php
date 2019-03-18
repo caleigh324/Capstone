@@ -120,10 +120,11 @@ $selected_course = "";
 if(isset($_POST['submit_courses'])){//to run PHP script on submit
   if(!empty($_POST['boxes'])){
     // Loop to store and display values of individual checked checkbox.
-    foreach($_POST['boxes'] as $selected_course);
+    foreach($_POST['boxes'] as $selected_course){
+      $_SESSION['selected_course'] = $selected_course;
       echo "You have selected: " . $selected_course . "</br>";
-
   }
+}
 }
  ?>
 </div>
@@ -140,23 +141,39 @@ if(isset($_POST['submit_courses'])){//to run PHP script on submit
  <tr>
   <?php
 
-   $sql3 = "SELECT arcadia_course, curricular_requirement FROM data WHERE school = ? AND transfer_course = ?";
-
-   if(mysqli_stmt_prepare($stmt, $sql3)){
-     mysqli_stmt_bind_param($stmt, "ss", $_SESSION['selected_school'], $selected_course);
-   }
-
-   else{
-     echo "else";
+   //$sql3 = "SELECT arcadia_course, curricular_requirement FROM data WHERE school = ? AND transfer_course IN ()";
+   $sql3 = "SELECT arcadia_course, transfer_course, curricular_requirement FROM data WHERE school = '" . $_SESSION['selected_school'] .
+   "' AND transfer_course IN (";
+     $loopNum = 0;
+     foreach($_POST['boxes'] as $selected_course){
+       $sql3 = $sql3 . " '" . $selected_course . "'";
+       if(count($_POST['boxes']) - 1 > $loopNum)
+       {
+          $sql3 = $sql3 . ", ";
+       }
+       $loopNum++;
      }
+     $sql3 = $sql3 . ")";
+    if(mysqli_stmt_prepare($stmt, $sql3)){
+      //mysqli_stmt_bind_param($stmt, "ss", $_SESSION['selected_school'], $_SESSION['selected_course']);
+    }
+
+    else{
+      echo "else";
+      }
+  //   echo $stmt;
+   // echo $sql3;
+   //$stmt = $sql3;
    mysqli_stmt_execute($stmt);
    $result3 = mysqli_stmt_get_result($stmt);
 
+   //echo mysqli_num_rows($result3);
+
    while($row3 = mysqli_fetch_assoc($result3)){
      // inserts all data as array
-     echo "<td>" . $selected_course . "</td> <td>" . $row3['arcadia_course'] . "</td> <td>" . $row3['curricular_requirement'] . "</td> </tr>";
-     //echo $row3['arcadia_course'] . " is equivalent to " . $selected_course . " at " . $_SESSION['selected_school'];
-        }
+       echo "<td>" . $row3['transfer_course'] . "</td> <td>" . $row3['arcadia_course'] . "</td> <td>" . $row3['curricular_requirement'] . "</td> </tr>";
+
+      }
    ?>
 
    </table>
