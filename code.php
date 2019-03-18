@@ -159,7 +159,7 @@ if(isset($_POST['submit_courses'])){//to run PHP script on submit
     }
 
     else{
-      echo "else";
+      echo "error";
       }
   //   echo $stmt;
    // echo $sql3;
