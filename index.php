@@ -39,10 +39,8 @@
 <body>
 
 <ul>
-  <li><a class="active" href="code.html">Home</a></li>
+  <li><a class="active" href="https://registrar-capstone.herokuapp.com/">Home</a></li>
   <li><a href="form.html">Add Course</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="#about">About</a></li>
 </ul>
 
 
@@ -56,7 +54,7 @@
 <h1>Arcadia Transfer Equivalency</h1>
 <br>
 <p>This website is the Capstone project for Caleigh Diefenthaler,
-  Christian Charney, and Dylan Power for the registrar and Bill Elnick and Enrollment Management</p>
+  Christian Charney, and Dylan Power for the registrar and Bill Elnick</p>
 </div>
 <div class = "school">
 <h3>Please select the university you previously attended</h3>
