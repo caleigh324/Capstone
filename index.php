@@ -1,9 +1,11 @@
 <?php
   include_once 'dbh.inc.php';
+  session_start();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+
 
   <style>
   ul {
@@ -46,15 +48,20 @@
 
 <body>
   <?php
-  $sql = "SELECT DISTINCT school FROM data;";
+  $sql = "SELECT DISTINCT school FROM data1;";
   $result = mysqli_query($conn, $sql);
   $resultCheck = mysqli_num_rows($result);
 ?>
 <div class ="intro">
 <h1>Arcadia Transfer Equivalency</h1>
 <br>
-<p>This website is the Capstone project for Caleigh Diefenthaler,
-  Christian Charney, and Dylan Power for the registrar and Bill Elnick</p>
+<p>This website is the Capstone project of Caleigh Diefenthaler,
+  Christian Charney, and Dylan Power<br> <br> How to use: <br>
+1. Select the university you previously attended and press 'Enter' <br>
+2. Select the check boxes of courses you completed and press 'Enter' <br>
+3. View the output at the bottom of the table. This does not confirm these courses will be transferred. Courses will only be confirmed when accepted to Arcadia University. <br>
+<br>
+If your university or course was not listed, please navigate to the 'Add Course' tab and complete the form with the proper information. The Registrar's office may be in contact with you.</p>
 </div>
 <div class = "school">
 <h3>Please select the university you previously attended</h3>
@@ -73,7 +80,6 @@
 <input type ="submit" name = "submit_school" value = "Enter">
 </form>
 <?php
-session_start();
 $selected_school = "";
 if(isset($_POST['submit_school'])){
   $selected_school = mysqli_real_escape_string($conn, $_POST['school']);
@@ -89,7 +95,7 @@ if(isset($_POST['submit_school'])){
 <form action = "" method ="post" name ="course_form">
   <?php
   //create template
-  $sql2 = "SELECT transfer_course, transfer_title FROM data WHERE school = ? ORDER BY transfer_course ASC";
+  $sql2 = "SELECT transfer_course, transfer_title FROM data1 WHERE school = ? ORDER BY transfer_course ASC";
   //create prepared statement
   $stmt = mysqli_stmt_init($conn);
   //prepare prepared Statement
@@ -138,10 +144,9 @@ if(isset($_POST['submit_courses'])){//to run PHP script on submit
    <th>Arcadia Curricular Requirement</th>
  </tr>
  <tr>
-  <?php
-
+   <?php
    //$sql3 = "SELECT arcadia_course, curricular_requirement FROM data WHERE school = ? AND transfer_course IN ()";
-   $sql3 = "SELECT arcadia_course, transfer_course, curricular_requirement FROM data WHERE school = '" . $_SESSION['selected_school'] .
+   $sql3 = "SELECT arcadia_course, transfer_course, curricular_requirement FROM data1 WHERE school = '" . $_SESSION['selected_school'] .
    "' AND transfer_course IN (";
      $loopNum = 0;
      foreach($_POST['boxes'] as $selected_course){
@@ -156,26 +161,24 @@ if(isset($_POST['submit_courses'])){//to run PHP script on submit
     if(mysqli_stmt_prepare($stmt, $sql3)){
       //mysqli_stmt_bind_param($stmt, "ss", $_SESSION['selected_school'], $_SESSION['selected_course']);
     }
-
     else{
-      echo "error";
+      //echo "error";
       }
   //   echo $stmt;
    // echo $sql3;
    //$stmt = $sql3;
    mysqli_stmt_execute($stmt);
    $result3 = mysqli_stmt_get_result($stmt);
-
    //echo mysqli_num_rows($result3);
-
    while($row3 = mysqli_fetch_assoc($result3)){
      // inserts all data as array
        echo "<td>" . $row3['transfer_course'] . "</td> <td>" . $row3['arcadia_course'] . "</td> <td>" . $row3['curricular_requirement'] . "</td> </tr>";
-
       }
-   ?>
 
-   </table>
+
+    ?>
+
+ </table>
 
 </div>
 
