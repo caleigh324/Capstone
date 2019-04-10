@@ -58,6 +58,9 @@ if (isset($_POST["submit"])) {
         
         $file = fopen($fileName, "r");
         
+         $sqlDelete = "DELETE FROM data1";
+         $result1 = mysqli_query($conn, $sqlDelete);
+        
         while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
             $sqlInsert = "INSERT into data1 (ORG_CODE_ID,SCHOOL,TRANSFER_COURSE,TRANSFER_TITLE,TRANSFER_SUB_TYPE,ARCADIA_COURSE,ARCADIA_SUB_TYPE,ARCADIA_TITLE,CURRICULAR_REQUIREMENT)
                    values ('" . $column[0] . "','" . $column[1] . "','" . $column[2] . "','" . $column[3] . "','" . $column[4] . "','". $column[5]."','".$column[6]."','". $column[7]."','". $column[8]."')";
