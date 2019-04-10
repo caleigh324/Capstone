@@ -42,7 +42,8 @@
 
 <ul>
   <li><a class="active" href="https://registrar-capstone.herokuapp.com/">Home</a></li>
-  <li><a href="form.html">Add Course</a></li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="login.php">Registrar Login</a></li>
 </ul>
 
 
@@ -55,13 +56,7 @@
 <div class ="intro">
 <h1>Arcadia Transfer Equivalency</h1>
 <br>
-<p>This website is the Capstone project of Caleigh Diefenthaler,
-  Christian Charney, and Dylan Power<br> <br> How to use: <br>
-1. Select the university you previously attended and press 'Enter' <br>
-2. Select the check boxes of courses you completed and press 'Enter' <br>
-3. View the output at the bottom of the table. This does not confirm these courses will be transferred. Courses will only be confirmed when accepted to Arcadia University. <br>
-<br>
-If your university or course was not listed, please navigate to the 'Add Course' tab and complete the form with the proper information. The Registrar's office may be in contact with you.</p>
+
 </div>
 <div class = "school">
 <h3>Please select the university you previously attended</h3>
@@ -137,13 +132,16 @@ if(isset($_POST['submit_courses'])){//to run PHP script on submit
 
 <div class = "output">
 <h3>Course Equivalency</h3>
-<table>
+<center>
+<table border = "1" bordercolor="black">
+
  <tr>
    <th>Transfer Course</th>
    <th>Arcadia Course Equivalent</th>
    <th>Arcadia Curricular Requirement</th>
  </tr>
  <tr>
+</center>
    <?php
    //$sql3 = "SELECT arcadia_course, curricular_requirement FROM data WHERE school = ? AND transfer_course IN ()";
    $sql3 = "SELECT arcadia_course, transfer_course, curricular_requirement FROM data1 WHERE school = '" . $_SESSION['selected_school'] .
