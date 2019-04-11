@@ -48,7 +48,6 @@
 <input type ="submit" name = "submit" value = "Import CSV">
 </form>
 <?php
-$conn = mysqli_connect("localhost", "root", "", "transfer");
 
 if (isset($_POST["submit"])) {
     
